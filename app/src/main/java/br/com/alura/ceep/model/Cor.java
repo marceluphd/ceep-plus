@@ -7,7 +7,6 @@ public enum Cor {
 
     BRANCO, AZUL, AMARELO, VERMELHO, VERDE, LILAS, GRAY, BROWN, ROXO;
 
-
     private String hex;
 
     static {
