@@ -109,14 +109,7 @@ public class FeedbackActivity extends AppCompatActivity {
                         }
                     }
                 }
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressBar.hide();
-
-                    }
-                }, 5000);
-
+                progressBar.hide();
             }
 
             @Override
