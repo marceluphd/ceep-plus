@@ -3,8 +3,10 @@ package br.com.alura.ceep.ui.activity;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -37,14 +39,13 @@ public class FeedbackActivity extends AppCompatActivity {
     private final Feedback feedback = new Feedback();
     private TextInputLayout email;
     private TextInputLayout conteudo;
-    private ConstraintLayout constraintLayout;
+    private ContentLoadingProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         setTitle(TITULO_APPBAR);
-
         inicializaCampos();
     }
 
@@ -66,7 +67,7 @@ public class FeedbackActivity extends AppCompatActivity {
     private void inicializaCampos() {
         email = findViewById(R.id.feedback_email);
         conteudo = findViewById(R.id.feedback_conteudo);
-        constraintLayout = findViewById(R.id.feedback_constraintlayout);
+        progressBar = findViewById(R.id.feedback_progressbar);
     }
 
     private void tentaEnviarFeedback() {
@@ -85,6 +86,7 @@ public class FeedbackActivity extends AppCompatActivity {
     }
 
     private void enviaFeedback() {
+        progressBar.show();
         limpaErros();
         preencheFeedback();
         Call<Feedback> call = new RetrofitInicializador().getFeedbackService().salva(feedback);
@@ -107,12 +109,21 @@ public class FeedbackActivity extends AppCompatActivity {
                         }
                     }
                 }
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.hide();
+
+                    }
+                }, 5000);
+
             }
 
             @Override
             public void onFailure(Call<Feedback> call, Throwable t) {
                 Log.e("failure", t.getMessage());
                 mostraErro(FALHA_NA_COMUNICACAO);
+                progressBar.hide();
             }
         });
     }

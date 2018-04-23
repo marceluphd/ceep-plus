@@ -7,20 +7,29 @@
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/feedback_constraintlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.activity.FeedbackActivity">
+
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/feedback_progressbar"
+            style="?android:attr/android:progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:indeterminate="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/feedback_banner"
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toTopOf="@id/feedback_email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/feedback_progressbar"
             app:srcCompat="@drawable/feedback_banner" />
 
         <android.support.design.widget.TextInputLayout
